@@ -1,3 +1,7 @@
 module.exports = {
-  publicPath: './'
+  publicPath: './',
+
+  css: {
+    sourceMap: true
+  }
 }
