@@ -1,0 +1,149 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap");
+
+// html, body {
+//   width: 100%;
+// }
+
+body {
+  font-family: "Noto Sans TC", sans-serif !important;
+}
+
+.container {
+  padding: 20px 100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#home {
+  overflow: hidden;
+  .city {
+    font-size: 16px;
+    font-weight: 700;
+    background: white;
+    border: 0;
+    margin: 20px 0 16px;
+  }
+
+  .icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .route {
+    width: 170px;
+    height: 70px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    color: #010101;
+    text-align: center;
+    border: 0;
+    margin-bottom: 20px;
+    &:hover {
+      background: #f3f8ff;
+      color: #2b72de;
+    }
+  }
+
+  .route-plan {
+    margin-right: 15px;
+  }
+
+  .route-btn {
+    width: 355px;
+    height: 55px;
+    background: #f6f6f6;
+    border-radius: 8px;
+    border: 0;
+    padding-left: 10px;
+    text-align: left;
+    margin-bottom: 20px;
+  }
+
+  .favorite {
+    .favorite-wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 16px;
+
+      .favorite-place {
+        display: flex;
+        align-items: center;
+
+        .favorite-word {
+          padding-left: 25px;
+          p:first-child {
+            font-size: 14px;
+            margin: 0;
+          }
+          p:last-child {
+            font-size: 12px;
+            color: #545454;
+            margin: 0;
+          }
+        }
+      }
+    }
+    .favorite-more {
+      font-size: 14px;
+      color: #2b72de;
+      background: white;
+      border: 0;
+      margin: 28px 0 48px;
+    }
+  }
+
+  .nearby {
+    .nearby-title {
+      font-size: 14px;
+      font-weight: 700;
+      padding-bottom: 16px;
+    }
+
+    .nearby-station-wrap {
+      div:first-child {
+        color: #2b72de;
+        background: #f3f8ff;
+      }
+      .nearby-station {
+        display: inline-block;
+        width: 128px;
+        height: 34px;
+        line-height: 34px;
+        text-align: center;
+        border-radius: 8px;
+        font-size: 12px;
+        font-weight: 500;
+        margin: 0 8px 8px 0;
+        background: #f9f9f9;
+      }
+    }
+
+    .nearby-bus-wrap {
+      box-sizing: content-box;
+      .nearby-bus {
+        display: inline-block;
+        width: 140px;
+        height: 80px;
+        background: #f9f9f9;
+        border-radius: 8px;
+        margin: 12px 20px 0 0;
+        padding: 6px 16px;
+      }
+
+      .nearby-bus-name {
+        font-size: 24px;
+        padding-bottom: 12px;
+      }
+
+      .nearby-bus-time {
+        font-size: 14px;
+      }
+      .nearby-bus-place {
+        font-size: 12px;
+        color: #505050;
+        margin-left: 10px;
+      }
+    }
+  }
+}
