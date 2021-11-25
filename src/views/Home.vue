@@ -5,49 +5,28 @@
       <img class="icon" src="../assets/bookmark2.png" />
     </div>
     <button class="city">
-      我在台中市 <img src="../assets/Vector 1.png" width="7px" />
+      我在台中市 <img src="../assets/Vector 1.png" width="7" />
     </button>
     <b-row>
       <b-col cols="4">
-        <div>
-          <button class="route route-plan">
-            <img class="icon" src="../assets/route.png" />
-            <div>路線規劃</div>
-          </button>
-          <router-link to="/route">
-            <button class="route">
-              <img class="icon" src="../assets/bus.png" />
-              <div>公車動態</div>
-            </button>
+        <div class="route-choose">
+          <router-link to="/">
+            <a class="route route-plan">
+              <span>&ensp;&emsp;路線規劃</span>
+            </a>
+          </router-link>
+          <router-link to="">
+            <a class="route route-bus">
+              <span>&ensp;&emsp;公車動態</span>
+            </a>
           </router-link>
         </div>
-        <button class="route-btn">我想去哪裡...？</button>
 
-        <div class="favorite">
-          <div class="favorite-wrap">
-            <div class="favorite-place">
-              <img class="icon" src="../assets/search history.png" />
-              <div class="favorite-word">
-                <p>審計新村</p>
-                <p>台中市西區民生路368巷4弄8號</p>
-              </div>
-            </div>
-            <img class="icon" src="../assets/bookmark2.png" />
-          </div>
-          <div class="favorite-wrap">
-            <div class="favorite-place">
-              <img class="icon" src="../assets/search history.png" />
-              <div class="favorite-word">
-                <p>審計新村</p>
-                <p>台中市西區民生路368巷4弄8號</p>
-              </div>
-            </div>
-            <img class="icon" src="../assets/bookmark2.png" />
-          </div>
-          <button class="favorite-more">
-            展開更多 <img src="../assets/Vector 1.png" width="7px" />
-          </button>
-        </div>
+        <router-link to="/search">
+          <a class="route-btn">我想去哪裡...？</a>
+        </router-link>
+
+        <Favorite></Favorite>
 
         <div class="nearby">
           <div class="nearby-title">
@@ -100,11 +79,13 @@
 </template>
 
 <script>
+import Favorite from '@/components/Favorite.vue'
 import Map from '@/components/Map.vue'
 
 export default {
-  name: 'Home',
+  name: 'Route',
   components: {
+    Favorite,
     Map
   }
 }

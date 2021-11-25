@@ -1,149 +1,294 @@
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
 
 // html, body {
 //   width: 100%;
 // }
 
 body {
-  font-family: "Noto Sans TC", sans-serif !important;
+  font-family: 'Noto Sans TC', sans-serif !important;
 }
 
 .container {
   padding: 20px 100px;
   margin-left: auto;
   margin-right: auto;
+  overflow: hidden;
 }
 
-#home {
-  overflow: hidden;
-  .city {
-    font-size: 16px;
-    font-weight: 700;
-    background: white;
-    border: 0;
-    margin: 20px 0 16px;
-  }
+.footer {
+  width: 100%;
+  height: 44px;
+  line-height: 44px;
+  position: static;
+  bottom: 0;
+  text-align: center;
+  background: #f9f9f9;
+  color: #515151;
+  font-size: 14px;
+  margin-top: 53px;
+}
 
-  .icon {
-    width: 20px;
-    height: 20px;
-  }
+.city {
+  font-size: 16px;
+  font-weight: 700;
+  background: white;
+  border: 0;
+  margin: 20px 0 16px;
+}
 
+.icon {
+  width: 20px;
+  height: 20px;
+}
+
+.route-choose {
   .route {
+    display: inline-block;
     width: 170px;
     height: 70px;
-    background: #f9f9f9;
+    line-height: 70px;
     border-radius: 8px;
     color: #010101;
     text-align: center;
-    border: 0;
+    text-decoration: none;
     margin-bottom: 20px;
-    &:hover {
-      background: #f3f8ff;
-      color: #2b72de;
-    }
   }
 
   .route-plan {
     margin-right: 15px;
+    background: #f9f9f9 url('~@/assets/route.png') no-repeat 27% center / 10%;
+    &:hover {
+      background: #f3f8ff url('~@/assets/b-route.png') no-repeat 27% center /
+        10%;
+      color: #2b72de;
+    }
   }
 
-  .route-btn {
-    width: 355px;
-    height: 55px;
-    background: #f6f6f6;
-    border-radius: 8px;
-    border: 0;
-    padding-left: 10px;
-    text-align: left;
-    margin-bottom: 20px;
+  .route-bus {
+    background: #f9f9f9 url('~@/assets/bus.png') no-repeat 27% center / 10%;
+    &:hover {
+      background: #f3f8ff url('~@/assets/b-bus.png') no-repeat 27% center / 10%;
+      color: #2b72de;
+    }
   }
+}
 
-  .favorite {
-    .favorite-wrap {
+.route-btn {
+  display: inline-block;
+  width: 355px;
+  height: 55px;
+  line-height: 55px;
+  background: #f6f6f6;
+  border-radius: 8px;
+  padding-left: 16px;
+  text-align: left;
+  text-decoration: none;
+  margin-bottom: 20px;
+  color: #000;
+  &:hover {
+    color: #000;
+  }
+}
+
+.favorite {
+  a {
+    color: #000;
+    text-decoration: none;
+    &:hover {
+      color: #000
+    }
+  }
+  .favorite-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 16px;
+
+    .favorite-place {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      padding-bottom: 16px;
 
-      .favorite-place {
-        display: flex;
-        align-items: center;
-
-        .favorite-word {
-          padding-left: 25px;
-          p:first-child {
-            font-size: 14px;
-            margin: 0;
-          }
-          p:last-child {
-            font-size: 12px;
-            color: #545454;
-            margin: 0;
-          }
+      .favorite-word {
+        padding-left: 24px;
+        p:first-child {
+          font-size: 14px;
+          margin: 0;
+        }
+        p:last-child {
+          font-size: 12px;
+          color: #545454;
+          margin: 0;
         }
       }
     }
-    .favorite-more {
-      font-size: 14px;
+  }
+  .favorite-more {
+    font-size: 14px;
+    color: #2b72de;
+    background: white;
+    border: 0;
+    margin-top: 12px;
+  }
+}
+
+.nearby {
+  .nearby-title {
+    font-size: 14px;
+    font-weight: 700;
+    padding: 48px 0 16px;
+  }
+
+  .nearby-station-wrap {
+    div:first-child {
       color: #2b72de;
-      background: white;
-      border: 0;
-      margin: 28px 0 48px;
+      background: #f3f8ff;
+    }
+    .nearby-station {
+      display: inline-block;
+      width: 128px;
+      height: 34px;
+      line-height: 34px;
+      text-align: center;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 500;
+      margin: 0 8px 8px 0;
+      background: #f9f9f9;
     }
   }
 
-  .nearby {
-    .nearby-title {
+  .nearby-bus-wrap {
+    .nearby-bus {
+      display: inline-block;
+      width: 150px;
+      // height: 80px;
+      background: #f9f9f9;
+      border-radius: 8px;
+      margin: 12px 20px 0 0;
+      padding: 6px 16px;
+    }
+
+    .nearby-bus-name {
+      font-size: 24px;
+      padding-bottom: 12px;
+    }
+
+    .nearby-bus-time {
       font-size: 14px;
-      font-weight: 700;
-      padding-bottom: 16px;
     }
+    .nearby-bus-place {
+      font-size: 12px;
+      color: #505050;
+      margin-left: 10px;
+    }
+  }
+}
 
-    .nearby-station-wrap {
-      div:first-child {
-        color: #2b72de;
-        background: #f3f8ff;
-      }
-      .nearby-station {
-        display: inline-block;
-        width: 128px;
-        height: 34px;
-        line-height: 34px;
-        text-align: center;
-        border-radius: 8px;
-        font-size: 12px;
-        font-weight: 500;
-        margin: 0 8px 8px 0;
-        background: #f9f9f9;
+.place {
+  display: flex;
+  .place-icon {
+    text-align: center;
+    padding: 12px 10px 0 0;
+    .line {
+      width: 1.5px;
+      height: 29px;
+      background: #000;
+      margin: 4px 9px;
+    }
+  }
+
+  input:focus {
+    outline: none;
+  }
+
+  .now-place {
+    width: 327px;
+    height: 48px;
+    background: #f3f8ff;
+    border-radius: 8px;
+    border: 0;
+    padding-left: 16px;
+    margin-bottom: 12px;
+  }
+
+  .now-place::placeholder {
+    color: #2b72de;
+    opacity: 1;
+  }
+
+  .now-place:-ms-input-placeholder {
+    color: #2b72de;
+  }
+
+  .now-place::-ms-input-placeholder {
+    color: #2b72de;
+  }
+
+  .next-place {
+    width: 327px;
+    height: 48px;
+    background: #f6f6f6;
+    border-radius: 8px;
+    border: 0;
+    padding-left: 16px;
+    margin-bottom: 36px;
+  }
+}
+
+.search-record {
+  .search-record-title {
+    padding: 28px 0 20px;
+  }
+}
+
+.map-padding {
+  padding-top: 62px;  
+}
+
+.back {
+  display: inline-block;
+  color: #000;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 14px;
+  padding-top: 62px;
+  &:hover {
+    color: #000
+  }
+}
+
+.move {
+  font-weight: 500;
+  font-size: 16px;
+  padding: 20px 0 16px;
+}
+
+.destination {
+  .destination-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #D6D6D6;;
+
+    .destination-place {
+      display: flex;
+      align-items: center;
+      .destination-word {
+        padding-left: 16px;
+        p {
+          font-size: 16px;
+          margin: 0;
+          font-weight: 700;
+        }
       }
     }
-
-    .nearby-bus-wrap {
-      box-sizing: content-box;
-      .nearby-bus {
-        display: inline-block;
-        width: 140px;
-        height: 80px;
-        background: #f9f9f9;
-        border-radius: 8px;
-        margin: 12px 20px 0 0;
-        padding: 6px 16px;
-      }
-
-      .nearby-bus-name {
-        font-size: 24px;
-        padding-bottom: 12px;
-      }
-
-      .nearby-bus-time {
-        font-size: 14px;
-      }
-      .nearby-bus-place {
-        font-size: 12px;
-        color: #505050;
-        margin-left: 10px;
-      }
-    }
+  }
+  .favorite-more {
+    font-size: 14px;
+    color: #2b72de;
+    background: white;
+    border: 0;
+    margin-top: 12px;
   }
 }
