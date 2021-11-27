@@ -32,40 +32,39 @@
           <div class="nearby-title">
             <img class="icon" src="../assets/station.png" />&ensp;附近站牌
           </div>
-
           <div class="nearby-station-wrap">
-            <div class="nearby-station">芝麻大廈 (步行1min)</div>
-            <div class="nearby-station">芝麻大廈 (步行1min)</div>
-            <div class="nearby-station">芝麻大廈 (步行1min)</div>
+            <template v-for="stop in nearBusStop">
+              <div
+                @click="changeStopID(stop.StopID)"
+                :key="stop.StopID"
+                class="nearby-station"
+                :class="{ active: stopID === stop.StopID }"
+              >
+                {{ stop.StopName.Zh_tw }}
+              </div>
+            </template>
           </div>
-
           <div class="nearby-bus-wrap">
-            <div class="nearby-bus">
-              <div class="nearby-bus-name">285</div>
-              <div class="nearby-bus-info">
-                <span class="nearby-bus-time">18分鐘</span>
-                <span class="nearby-bus-place">往三重國小</span>
+            <div
+              v-for="bus in nearBus"
+              :key="bus.PlateNumb"
+              class="nearby-bus"
+            >
+              <div class="nearby-bus-name">
+                {{ bus.RouteName.Zh_tw }}
               </div>
-            </div>
-            <div class="nearby-bus">
-              <div class="nearby-bus-name">285</div>
               <div class="nearby-bus-info">
                 <span class="nearby-bus-time">18分鐘</span>
-                <span class="nearby-bus-place">往三重國小</span>
-              </div>
-            </div>
-            <div class="nearby-bus">
-              <div class="nearby-bus-name">285</div>
-              <div class="nearby-bus-info">
-                <span class="nearby-bus-time">18分鐘</span>
-                <span class="nearby-bus-place">往三重國小</span>
-              </div>
-            </div>
-            <div class="nearby-bus">
-              <div class="nearby-bus-name">285</div>
-              <div class="nearby-bus-info">
-                <span class="nearby-bus-time">18分鐘</span>
-                <span class="nearby-bus-place">往三重國小</span>
+                <!-- <span
+                  v-if="bus.Direction === 0"
+                  class="nearby-bus-place"
+                  >往{{ bus.DestinationStopNameZh }}</span
+                >
+                <span
+                  v-if="bus.Direction === 1"
+                  class="nearby-bus-place"
+                  >往{{ bus.DepartureStopNameZh }}</span
+                > -->
               </div>
             </div>
           </div>
@@ -81,12 +80,39 @@
 <script>
 import Favorite from '@/components/Favorite.vue'
 import Map from '@/components/Map.vue'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
-  name: 'Route',
+  name: 'Home',
   components: {
     Favorite,
     Map
+  },
+  computed: {
+    ...mapState([
+      'longitude',
+      'latitude',
+      'mapUrl',
+      'nearBusStop',
+      'nearBusRoute',
+      'nearBus'
+    ]),
+    ...mapGetters(['filterNearBusRoute'])
+  },
+  watch: {
+    nearBusStop() {
+      this.stopID = this.nearBusStop[0].StopID
+    }
+  },
+  data() {
+    return {
+      stopID: ''
+    }
+  },
+  methods: {
+    changeStopID(stopID) {
+      this.stopID = stopID
+    }
   }
 }
 </script>

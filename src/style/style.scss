@@ -1,11 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap");
 
 // html, body {
 //   width: 100%;
 // }
 
 body {
-  font-family: 'Noto Sans TC', sans-serif !important;
+  font-family: "Noto Sans TC", sans-serif !important;
 }
 
 .container {
@@ -56,18 +56,17 @@ body {
 
   .route-plan {
     margin-right: 15px;
-    background: #f9f9f9 url('~@/assets/route.png') no-repeat 27% center / 10%;
+    background: #f9f9f9 url("~@/assets/route.png") no-repeat 27% center / 10%;
     &:hover {
-      background: #f3f8ff url('~@/assets/b-route.png') no-repeat 27% center /
-        10%;
+      background: #f3f8ff url("~@/assets/b-route.png") no-repeat 27% center / 10%;
       color: #2b72de;
     }
   }
 
   .route-bus {
-    background: #f9f9f9 url('~@/assets/bus.png') no-repeat 27% center / 10%;
+    background: #f9f9f9 url("~@/assets/bus.png") no-repeat 27% center / 10%;
     &:hover {
-      background: #f3f8ff url('~@/assets/b-bus.png') no-repeat 27% center / 10%;
+      background: #f3f8ff url("~@/assets/b-bus.png") no-repeat 27% center / 10%;
       color: #2b72de;
     }
   }
@@ -95,7 +94,7 @@ body {
     color: #000;
     text-decoration: none;
     &:hover {
-      color: #000
+      color: #000;
     }
   }
   .favorite-wrap {
@@ -139,10 +138,6 @@ body {
   }
 
   .nearby-station-wrap {
-    div:first-child {
-      color: #2b72de;
-      background: #f3f8ff;
-    }
     .nearby-station {
       display: inline-block;
       width: 128px;
@@ -155,21 +150,29 @@ body {
       margin: 0 8px 8px 0;
       background: #f9f9f9;
     }
+
+    .nearby-station.active {
+      color: #2b72de;
+      background: #f3f8ff;
+    }
   }
 
   .nearby-bus-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding-top: 20px;
+
     .nearby-bus {
-      display: inline-block;
-      width: 150px;
-      // height: 80px;
+      flex: 0 1 48%;
       background: #f9f9f9;
       border-radius: 8px;
-      margin: 12px 20px 0 0;
+      margin-bottom: 12px;
       padding: 6px 16px;
     }
 
     .nearby-bus-name {
-      font-size: 24px;
+      font-size: 18px;
       padding-bottom: 12px;
     }
 
@@ -242,7 +245,7 @@ body {
 }
 
 .map-padding {
-  padding-top: 62px;  
+  padding-top: 62px;
 }
 
 .back {
@@ -253,7 +256,7 @@ body {
   font-size: 14px;
   padding-top: 62px;
   &:hover {
-    color: #000
+    color: #000;
   }
 }
 
@@ -269,7 +272,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding-bottom: 20px;
-    border-bottom: 1px solid #D6D6D6;;
+    border-bottom: 1px solid #d6d6d6;
 
     .destination-place {
       display: flex;

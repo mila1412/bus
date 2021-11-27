@@ -1,14 +1,37 @@
 import axios from 'axios'
+import { busID, busKey } from '../../key'
+const JsSHA = require('../sha1/sha1')
 
-const devAPI = ''
-const proAPI = process.env.VUE_APP_PRODUCT_API
+const proAPI = 'https://ptx.transportdata.tw/MOTC'
 
 // 一律透過此方法呼叫 API
 class HttpModel {
   async request(cfg) {
-    cfg.baseURL = process.env.NODE_ENV === 'development' ? devAPI : proAPI
+    cfg.baseURL = proAPI
     cfg.withCredentials = true
-    const instance = axios.create()
+
+    function GetAuthorizationHeader() {
+      const GMTString = new Date().toGMTString()
+      const ShaObj = new JsSHA('SHA-1', 'TEXT')
+      ShaObj.setHMACKey(busKey, 'TEXT')
+      ShaObj.update('x-date: ' + GMTString)
+      const HMAC = ShaObj.getHMAC('B64')
+      var Authorization =
+        'hmac username="' +
+        busID +
+        '", algorithm="hmac-sha1", headers="x-date", signature="' +
+        HMAC +
+        '"'
+
+      return {
+        Authorization: Authorization,
+        'X-Date': GMTString
+      }
+    }
+
+    const instance = axios.create({
+      headers: GetAuthorizationHeader()
+    })
 
     instance.interceptors.request.use(
       (config) => config,
