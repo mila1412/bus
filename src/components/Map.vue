@@ -2,9 +2,10 @@
   <GmapMap
     ref="mapRef"
     map-type-id="terrain"
-    :center="{lat:defaultLat, lng:defaultLng}"
+    :center="{ lat: defaultLat, lng: defaultLng }"
     :options="mapOptions"
-    :style="styleOptions">
+    :style="styleOptions"
+  >
     <GmapMarker
       :key="index"
       v-for="(m, index) in markers"
@@ -12,7 +13,7 @@
       :icon="m.icon"
       :clickable="true"
       :draggable="true"
-      @click="center=m.position"
+      @click="center = m.position"
     />
   </GmapMap>
 </template>
@@ -27,7 +28,11 @@ export default {
     return {
       defaultLat: 25.05247569778274,
       defaultLng: 121.59045840698072,
-      markers: []
+      markers: [],
+      styleOptions: {
+        width: '100%',
+        height: '100%'
+      }
     }
   },
   props: {
@@ -52,20 +57,18 @@ export default {
         mapTypeControl: false,
         streetViewControl: false
       }
-    },
-    styleOptions() {
-      return {
-        width: '100%',
-        height: window.innerHeight > 500 ? (window.innerHeight - 20) + 'px' : '480px'
-      }
     }
   },
   watch: {
     stopMarkers: function (stops) {
-      // console.log(stops)
       this.markers = []
       for (let i = 0; i < stops.length; i++) {
-        if (this.markers.some(m => m.position.lat === stops[i].lat && m.position.lng === stops[i].lng)) {
+        if (
+          this.markers.some(
+            (m) =>
+              m.position.lat === stops[i].lat && m.position.lng === stops[i].lng
+          )
+        ) {
           // 重複站位
           console.log(`Duplicated station:(${stops[i].lat},${stops[i].lng})`)
         } else {
@@ -81,7 +84,6 @@ export default {
       }
     }
   },
-  methods: {
-  }
+  methods: {}
 }
 </script>
