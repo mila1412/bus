@@ -33,14 +33,21 @@
             <img class="icon" src="../assets/station.png" />&ensp;附近站牌
           </div>
           <div class="nearby-station-wrap">
-            <template v-for="stop in nearBusStop">
+            <template v-for="stop in getWalkSecond">
               <div
-                @click="changeStopID(stop.StopID, stop.StopPosition)"
-                :key="stop.StopID"
+                @click="
+                  changeStopID({
+                    stopUID: stop.stopUID,
+                    positionLat: stop.positionLat,
+                    positionLng: stop.positionLng
+                  })
+                "
+                :key="stop.stopUID"
                 class="nearby-station"
-                :class="{ active: stopID === stop.StopID }"
+                :class="{ active: stopUID === stop.stopUID }"
               >
-                {{ stop.StopName.Zh_tw }}
+                {{ stop.stopName }} (步行
+                {{ (stop.seconds / 60).toFixed(1) }} 分)
               </div>
             </template>
           </div>
@@ -51,16 +58,10 @@
               </div>
               <div class="nearby-bus-info">
                 <span class="nearby-bus-time">18分鐘</span>
-                <!-- <span
-                  v-if="bus.Direction === 0"
-                  class="nearby-bus-place"
-                  >往{{ bus.DestinationStopNameZh }}</span
+
+                <span class="nearby-bus-place"
+                  >往{{ getBusDirection(bus.Direction, bus.RouteUID) }}</span
                 >
-                <span
-                  v-if="bus.Direction === 1"
-                  class="nearby-bus-place"
-                  >往{{ bus.DepartureStopNameZh }}</span
-                > -->
               </div>
             </div>
           </div>
@@ -94,7 +95,7 @@ export default {
       'nearBus',
       'nearInfo'
     ]),
-    ...mapGetters(['filterNearBusRoute'])
+    ...mapGetters(['filterNearBusRoute', 'getWalkSecond'])
   },
   watch: {
     nearBusStop() {
@@ -107,11 +108,14 @@ export default {
             { lat: e.positionLat, lng: e.positionLng })
         })
       }
+    },
+    getWalkSecond() {
+      this.stopUID = this.getWalkSecond[0].stopUID
     }
   },
   data() {
     return {
-      stopID: '',
+      stopUID: '',
       stopMarkers: []
     }
   },
@@ -119,15 +123,27 @@ export default {
   },
   methods: {
     ...mapMutations(['SET_LONGITUDE', 'SET_LATITUDE']),
-    changeStopID(stopID, position) {
-      this.stopID = stopID
+    changeStopID(payload) {
+      this.stopUID = payload.stopUID
 
       console.log(this.nearInfo)
       // 設定地圖標示
       this.stopMarkers.length = 0
       this.stopMarkers.push(
         { lat: 25.05247569778274, lng: 121.59045840698072 },
-        { lat: 25.002845309945233, lng: 121.51857574692312 })
+        { lat: 25.002845309945233, lng: 121.51857574692312 }
+      )
+    },
+    getBusDirection(direction, routeID) {
+      const busObj = this.nearBusRoute.find((ele) => {
+        return ele.RouteUID === routeID
+      })
+
+      return busObj
+        ? direction === 0
+          ? busObj.DestinationStopNameZh
+          : busObj.DepartureStopNameZh
+        : ''
     }
   }
 }

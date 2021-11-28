@@ -47,7 +47,6 @@ export default {
       this.getNearInfo()
       this.getNearBusStop()
       this.getNearBus()
-      this.getNearBusRoute()
     },
     showError(error) {
       switch (error.code) {

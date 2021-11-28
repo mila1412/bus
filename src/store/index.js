@@ -63,7 +63,6 @@ export default new Vuex.Store({
         }
       })
     },
-
     getNearBusStop({ commit, state }) {
       BusApi.getNearBusStop({
         $top: 3,
@@ -72,17 +71,42 @@ export default new Vuex.Store({
         commit(SET_NEAR_STOP, res)
       })
     },
-    getNearBus({ commit, state }) {
+    getNearBus({ commit, state, dispatch }) {
       BusApi.getNearBus({
         $top: 30,
         $spatialFilter: `nearby(${state.latitude}, ${state.longitude}, 1000)`
       }).then((res) => {
+        const nearBusRouteUID = []
+        res.forEach((ele) => {
+          nearBusRouteUID.push(ele.RouteUID)
+        })
+        dispatch('mapBusDirection', nearBusRouteUID)
         commit(SET_NEAR_BUS, res)
       })
     },
     getNearBusRoute({ commit, state }) {
       BusApi.getNearBusRoute({
-        $top: 10,
+        $top: 30,
+        $spatialFilter: `nearby(${state.latitude}, ${state.longitude}, 500)`
+      }).then((res) => {
+        commit(SET_NEAR_BUS_ROUTE, res)
+      })
+    },
+    mapBusDirection({ commit, state }, nearBusRouteUIDArray) {
+      let filterString = ''
+
+      nearBusRouteUIDArray.forEach((ele, index) => {
+        if (index === nearBusRouteUIDArray.length - 1) {
+          filterString += 'RouteUID eq' + ' ' + "'" + ele + "'"
+        } else {
+          filterString +=
+            'RouteUID eq' + ' ' + "'" + ele + "'" + ' ' + 'or' + ' '
+        }
+      })
+
+      BusApi.getNearBusRoute({
+        $top: 1,
+        $filter: filterString,
         $spatialFilter: `nearby(${state.latitude}, ${state.longitude}, 500)`
       }).then((res) => {
         commit(SET_NEAR_BUS_ROUTE, res)
@@ -122,11 +146,20 @@ export default new Vuex.Store({
         return busInfo
       }
       return []
+    },
+    getWalkSecond(state) {
+      const nearBusStopName = []
+      if (state.nearInfo.success) {
+        state.nearBusStop.forEach((ele) => {
+          nearBusStopName.push(
+            state.nearInfo.data.find((info) => {
+              return info.stopName === ele.StopName.Zh_tw
+            })
+          )
+        })
+      }
+
+      return nearBusStopName
     }
-    // filterNearBus: (state) => {
-    //   if(state.nearBus.length) {
-    //     state.nearBus.
-    //   }
-    // }
   }
 })
