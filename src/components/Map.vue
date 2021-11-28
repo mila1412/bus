@@ -28,7 +28,11 @@ export default {
     return {
       defaultLat: 25.05247569778274,
       defaultLng: 121.59045840698072,
-      markers: []
+      markers: [],
+      styleOptions: {
+        width: '100%',
+        height: '100%'
+      }
     }
   },
   props: {
@@ -66,13 +70,6 @@ export default {
         mapTypeControl: false,
         streetViewControl: false
       }
-    },
-    styleOptions() {
-      return {
-        width: '100%',
-        height:
-          window.innerHeight > 500 ? window.innerHeight - 20 + 'px' : '480px'
-      }
     }
   },
   watch: {
@@ -85,6 +82,7 @@ export default {
       }
 
       // 更新站點
+
       for (let i = 0; i < stops.length; i++) {
         if (
           this.markers.some(
