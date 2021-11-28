@@ -2,9 +2,9 @@
   <GmapMap
     ref="mapRef"
     map-type-id="terrain"
-    style="width: 100%; height: 500px"
     :center="{lat:defaultLat, lng:defaultLng}"
-    :options="mapOptions">
+    :options="mapOptions"
+    :style="styleOptions">
     <GmapMarker
       :key="index"
       v-for="(m, index) in markers"
@@ -52,11 +52,17 @@ export default {
         mapTypeControl: false,
         streetViewControl: false
       }
+    },
+    styleOptions() {
+      return {
+        width: '100%',
+        height: window.innerHeight > 500 ? (window.innerHeight - 20) + 'px' : '480px'
+      }
     }
   },
   watch: {
     stopMarkers: function (stops) {
-      console.log(stops)
+      // console.log(stops)
       this.markers = []
       for (let i = 0; i < stops.length; i++) {
         if (this.markers.some(m => m.position.lat === stops[i].lat && m.position.lng === stops[i].lng)) {
