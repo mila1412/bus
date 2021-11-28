@@ -105,7 +105,7 @@ export default new Vuex.Store({
       })
 
       BusApi.getNearBusRoute({
-        $top: 1,
+        $top: 30,
         $filter: filterString,
         $spatialFilter: `nearby(${state.latitude}, ${state.longitude}, 500)`
       }).then((res) => {
