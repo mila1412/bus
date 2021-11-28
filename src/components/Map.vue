@@ -2,9 +2,9 @@
   <GmapMap
     ref="mapRef"
     map-type-id="terrain"
-    style="width: 100%; height: 500px"
     :center="{lat:defaultLat, lng:defaultLng}"
-    :options="mapOptions">
+    :options="mapOptions"
+    :style="styleOptions">
     <GmapMarker
       :key="index"
       v-for="(m, index) in markers"
@@ -44,7 +44,7 @@ export default {
     ...mapState(['latitude', 'longitude']),
     mapOptions() {
       return {
-        zoom: 16,
+        zoom: 17,
         center: {
           lat: this.latitude === null ? this.defaultLat : this.latitude,
           lng: this.longitude === null ? this.defaultLng : this.longitude
@@ -52,21 +52,32 @@ export default {
         mapTypeControl: false,
         streetViewControl: false
       }
+    },
+    styleOptions() {
+      return {
+        width: '100%',
+        height: window.innerHeight > 500 ? (window.innerHeight - 20) + 'px' : '480px'
+      }
     }
   },
   watch: {
     stopMarkers: function (stops) {
-      console.log(stops)
+      // console.log(stops)
       this.markers = []
       for (let i = 0; i < stops.length; i++) {
-        const m = {
-          position: {
-            lat: stops[i].lat,
-            lng: stops[i].lng
-          },
-          icon: require('../assets/location.png')
+        if (this.markers.some(m => m.position.lat === stops[i].lat && m.position.lng === stops[i].lng)) {
+          // 重複站位
+          console.log(`Duplicated station:(${stops[i].lat},${stops[i].lng})`)
+        } else {
+          const m = {
+            position: {
+              lat: stops[i].lat,
+              lng: stops[i].lng
+            },
+            icon: require('../assets/location.png')
+          }
+          this.markers.push(m)
         }
-        this.markers.push(m)
       }
     }
   },
