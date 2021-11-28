@@ -63,7 +63,6 @@ export default new Vuex.Store({
         }
       })
     },
-
     getNearBusStop({ commit, state }) {
       BusApi.getNearBusStop({
         $top: 3,
@@ -122,11 +121,20 @@ export default new Vuex.Store({
         return busInfo
       }
       return []
+    },
+    getWalkSecond(state) {
+      const nearBusStopName = []
+      if (state.nearInfo.success) {
+        state.nearBusStop.forEach((ele) => {
+          nearBusStopName.push(
+            state.nearInfo.data.find((info) => {
+              return info.stopName === ele.StopName.Zh_tw
+            })
+          )
+        })
+      }
+
+      return nearBusStopName
     }
-    // filterNearBus: (state) => {
-    //   if(state.nearBus.length) {
-    //     state.nearBus.
-    //   }
-    // }
   }
 })

@@ -138,9 +138,12 @@ body {
   }
 
   .nearby-station-wrap {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+
     .nearby-station {
-      display: inline-block;
-      width: 128px;
       height: 34px;
       line-height: 34px;
       text-align: center;
