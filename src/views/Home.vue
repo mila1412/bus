@@ -68,7 +68,7 @@
         </div>
       </b-col>
       <b-col cols="8">
-        <Map :stopMarkers="stopMarkers"></Map>
+        <Map :stopMarkers="stopMarkers" :focusMarker="focusMarker"></Map>
       </b-col>
     </b-row>
   </div>
@@ -103,9 +103,8 @@ export default {
     },
     nearInfo() {
       if (this.nearInfo !== null) {
-        this.nearInfo.data.forEach(e => {
-          this.stopMarkers.push(
-            { lat: e.positionLat, lng: e.positionLng })
+        this.nearInfo.data.forEach((e) => {
+          this.stopMarkers.push({ lat: e.positionLat, lng: e.positionLng })
         })
       }
     },
@@ -116,23 +115,18 @@ export default {
   data() {
     return {
       stopUID: '',
-      stopMarkers: []
+      stopMarkers: [],
+      focusMarker: null
     }
   },
-  mount() {
-  },
+  mount() {},
   methods: {
     ...mapMutations(['SET_LONGITUDE', 'SET_LATITUDE']),
     changeStopID(payload) {
       this.stopUID = payload.stopUID
 
-      console.log(this.nearInfo)
-      // 設定地圖標示
-      this.stopMarkers.length = 0
-      this.stopMarkers.push(
-        { lat: 25.05247569778274, lng: 121.59045840698072 },
-        { lat: 25.002845309945233, lng: 121.51857574692312 }
-      )
+      // 設定焦點座標
+      this.focusMarker = payload
     },
     getBusDirection(direction, routeID) {
       const busObj = this.nearBusRoute.find((ele) => {
