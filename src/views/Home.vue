@@ -91,13 +91,22 @@ export default {
       'mapUrl',
       'nearBusStop',
       'nearBusRoute',
-      'nearBus'
+      'nearBus',
+      'nearInfo'
     ]),
     ...mapGetters(['filterNearBusRoute'])
   },
   watch: {
     nearBusStop() {
       this.stopID = this.nearBusStop[0].StopID
+    },
+    nearInfo() {
+      if (this.nearInfo !== null) {
+        this.nearInfo.data.forEach(e => {
+          this.stopMarkers.push(
+            { lat: e.positionLat, lng: e.positionLng })
+        })
+      }
     }
   },
   data() {
@@ -106,11 +115,14 @@ export default {
       stopMarkers: []
     }
   },
+  mount() {
+  },
   methods: {
     ...mapMutations(['SET_LONGITUDE', 'SET_LATITUDE']),
     changeStopID(stopID, position) {
       this.stopID = stopID
 
+      console.log(this.nearInfo)
       // 設定地圖標示
       this.stopMarkers.length = 0
       this.stopMarkers.push(
