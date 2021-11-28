@@ -1,5 +1,6 @@
 import Handler from '@/plugins/axios/api-handler'
 import productionAPI from '../config/api_config'
+import qs from 'qs'
 
 export default {
   /**
@@ -39,6 +40,30 @@ export default {
       params: payload
     }
     const result = await Handler.request(config)
+    return result.data
+  },
+  /**
+   * @description herokuapp API
+   */
+  async getUserInit() {
+    const config = {
+      url: `${productionAPI.getUserInit}`,
+      method: 'get'
+    }
+    const result = await Handler.requestBusTop(config)
+    return result.data
+  },
+  /**
+   * @description herokuapp API
+   */
+  async getUserInfo(payload) {
+    const config = {
+      url: `${productionAPI.getUserInfo}`,
+      method: 'post',
+      headers: { 'content-type': 'application/x-www-form-urlencoded' },
+      data: qs.stringify(payload)
+    }
+    const result = await Handler.requestBusTop(config)
     return result.data
   }
 }

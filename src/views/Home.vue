@@ -35,7 +35,7 @@
           <div class="nearby-station-wrap">
             <template v-for="stop in nearBusStop">
               <div
-                @click="changeStopID(stop.StopID)"
+                @click="changeStopID(stop.StopID, stop.StopPosition)"
                 :key="stop.StopID"
                 class="nearby-station"
                 :class="{ active: stopID === stop.StopID }"
@@ -45,11 +45,7 @@
             </template>
           </div>
           <div class="nearby-bus-wrap">
-            <div
-              v-for="bus in nearBus"
-              :key="bus.PlateNumb"
-              class="nearby-bus"
-            >
+            <div v-for="bus in nearBus" :key="bus.PlateNumb" class="nearby-bus">
               <div class="nearby-bus-name">
                 {{ bus.RouteName.Zh_tw }}
               </div>
@@ -80,7 +76,7 @@
 <script>
 import Favorite from '@/components/Favorite.vue'
 import Map from '@/components/Map.vue'
-import { mapState, mapGetters } from 'vuex'
+import { mapState, mapGetters, mapMutations } from 'vuex'
 
 export default {
   name: 'Home',
@@ -110,8 +106,11 @@ export default {
     }
   },
   methods: {
-    changeStopID(stopID) {
+    ...mapMutations(['SET_LONGITUDE', 'SET_LATITUDE']),
+    changeStopID(stopID, position) {
       this.stopID = stopID
+      this.SET_LONGITUDE(position.PositionLat)
+      this.SET_LATITUDE(position.PositionLon)
     }
   }
 }

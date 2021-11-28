@@ -9,8 +9,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
-import BusApi from '@/api/busAPI/bus'
+import { mapState, mapMutations, mapActions } from 'vuex'
 
 export default {
   name: 'App',
@@ -35,20 +34,19 @@ export default {
     }
   },
   methods: {
-    ...mapMutations([
-      'SET_LONGITUDE',
-      'SET_LATITUDE',
-      'SET_MAP_URL',
-      'SET_NEAR_STOP',
-      'SET_NEAR_BUS_ROUTE',
-      'SET_NEAR_BUS'
+    ...mapMutations(['SET_LONGITUDE', 'SET_LATITUDE']),
+    ...mapActions([
+      'getNearBusStop',
+      'getNearBus',
+      'getNearBusRoute',
+      'getNearInfo'
     ]),
     showPosition(position) {
       this.SET_LONGITUDE(position.coords.longitude)
       this.SET_LATITUDE(position.coords.latitude)
+      this.getNearInfo()
       this.getNearBusStop()
       this.getNearBus()
-
       this.getNearBusRoute()
     },
     showError(error) {
@@ -66,30 +64,6 @@ export default {
           this.warningText = 'An unknown error occurred.'
           break
       }
-    },
-    getNearBusStop() {
-      BusApi.getNearBusStop({
-        $top: 3,
-        $spatialFilter: `nearby(StopPosition,${this.latitude}, ${this.longitude}, 500)`
-      }).then((res) => {
-        this.SET_NEAR_STOP(res)
-      })
-    },
-    getNearBusRoute() {
-      BusApi.getNearBusRoute({
-        $top: 10,
-        $spatialFilter: `nearby(${this.latitude}, ${this.longitude}, 500)`
-      }).then((res) => {
-        this.SET_NEAR_BUS_ROUTE(res)
-      })
-    },
-    getNearBus() {
-      BusApi.getNearBus({
-        $top: 30,
-        $spatialFilter: `nearby(${this.latitude}, ${this.longitude}, 1000)`
-      }).then((res) => {
-        this.SET_NEAR_BUS(res)
-      })
     }
   }
 }

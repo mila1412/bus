@@ -6,9 +6,11 @@ import {
   SET_MAP_URL,
   SET_NEAR_STOP,
   SET_NEAR_BUS_ROUTE,
-  SET_NEAR_BUS
+  SET_NEAR_BUS,
+  SET_NEAR_INFO
 } from './mutationTypes'
 import { mapKey } from '../key'
+import BusApi from '@/api/busAPI/bus'
 
 Vue.use(Vuex)
 
@@ -19,7 +21,8 @@ export default new Vuex.Store({
     mapUrl: '',
     nearBusStop: [],
     nearBusRoute: [],
-    nearBus: []
+    nearBus: [],
+    nearInfo: []
   },
   mutations: {
     [SET_LONGITUDE](state, longitude) {
@@ -41,9 +44,51 @@ export default new Vuex.Store({
     },
     [SET_NEAR_BUS](state, nearBus) {
       state.nearBus = nearBus
+    },
+    [SET_NEAR_INFO](state, nearInfo) {
+      state.nearInfo = nearInfo
     }
   },
-  actions: {},
+  actions: {
+    getNearInfo({ commit, state }) {
+      BusApi.getUserInit().then((res) => {
+        if (res.success) {
+          BusApi.getUserInfo({
+            token: '13f0657021ad4caca01e1544dee56ecb',
+            Lat: state.latitude,
+            Lng: state.longitude
+          }).then((res) => {
+            commit(SET_NEAR_INFO, res)
+          })
+        }
+      })
+    },
+
+    getNearBusStop({ commit, state }) {
+      BusApi.getNearBusStop({
+        $top: 3,
+        $spatialFilter: `nearby(StopPosition,${state.latitude}, ${state.longitude}, 500)`
+      }).then((res) => {
+        commit(SET_NEAR_STOP, res)
+      })
+    },
+    getNearBus({ commit, state }) {
+      BusApi.getNearBus({
+        $top: 30,
+        $spatialFilter: `nearby(${state.latitude}, ${state.longitude}, 1000)`
+      }).then((res) => {
+        commit(SET_NEAR_BUS, res)
+      })
+    },
+    getNearBusRoute({ commit, state }) {
+      BusApi.getNearBusRoute({
+        $top: 10,
+        $spatialFilter: `nearby(${state.latitude}, ${state.longitude}, 500)`
+      }).then((res) => {
+        commit(SET_NEAR_BUS_ROUTE, res)
+      })
+    }
+  },
   modules: {},
   getters: {
     filterNearBusRoute: (state) => {

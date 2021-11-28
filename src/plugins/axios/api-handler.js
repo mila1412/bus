@@ -3,6 +3,7 @@ import { busID, busKey } from '../../key'
 const JsSHA = require('../sha1/sha1')
 
 const proAPI = 'https://ptx.transportdata.tw/MOTC'
+const busTopAPI = 'https://bustoptw.herokuapp.com/'
 
 // 一律透過此方法呼叫 API
 class HttpModel {
@@ -54,6 +55,41 @@ class HttpModel {
         return Promise.reject(error.response.data)
       }
     )
+
+    try {
+      const result = await instance.request(cfg)
+      return Promise.resolve(result)
+    } catch (throwError) {
+      return Promise.reject(throwError)
+    }
+  }
+
+  async requestBusTop(cfg) {
+    cfg.baseURL = busTopAPI
+    const instance = axios.create()
+
+    instance.interceptors.request.use(
+      (config) => config,
+      (error) => Promise.reject(error)
+    )
+
+    instance.interceptors.response.use(
+      (response) => {
+        return response
+      },
+      (error) => {
+        if (error.response) {
+          switch (error.response.status) {
+            case 401:
+              break
+            default:
+              break
+          }
+        }
+        return Promise.reject(error.response.data)
+      }
+    )
+
     try {
       const result = await instance.request(cfg)
       return Promise.resolve(result)
