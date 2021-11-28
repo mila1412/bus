@@ -70,8 +70,8 @@
           </div>
         </div>
       </b-col>
-      <b-col cols="5">
-        <Map></Map>
+      <b-col cols="8">
+        <Map :stopMarkers="stopMarkers"></Map>
       </b-col>
     </b-row>
   </div>
@@ -106,12 +106,19 @@ export default {
   },
   data() {
     return {
-      stopID: ''
+      stopID: '',
+      stopMarkers: []
     }
   },
   methods: {
     changeStopID(stopID) {
       this.stopID = stopID
+
+      // 設定地圖標示
+      this.stopMarkers.length = 0
+      this.stopMarkers.push(
+        { lat: 25.05247569778274, lng: 121.59045840698072 },
+        { lat: 25.002845309945233, lng: 121.51857574692312 })
     }
   }
 }
