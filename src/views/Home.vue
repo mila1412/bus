@@ -58,16 +58,10 @@
               </div>
               <div class="nearby-bus-info">
                 <span class="nearby-bus-time">18分鐘</span>
-                <!-- <span
-                  v-if="bus.Direction === 0"
-                  class="nearby-bus-place"
-                  >往{{ bus.DestinationStopNameZh }}</span
+
+                <span class="nearby-bus-place"
+                  >往{{ getBusDirection(bus.Direction, bus.RouteUID) }}</span
                 >
-                <span
-                  v-if="bus.Direction === 1"
-                  class="nearby-bus-place"
-                  >往{{ bus.DepartureStopNameZh }}</span
-                > -->
               </div>
             </div>
           </div>
@@ -97,8 +91,8 @@ export default {
       'latitude',
       'mapUrl',
       'nearBusStop',
-      'nearBusRoute',
-      'nearBus'
+      'nearBus',
+      'nearBusRoute'
     ]),
     ...mapGetters(['filterNearBusRoute', 'getWalkSecond'])
   },
@@ -124,6 +118,17 @@ export default {
         { lat: 25.05247569778274, lng: 121.59045840698072 },
         { lat: 25.002845309945233, lng: 121.51857574692312 }
       )
+    },
+    getBusDirection(direction, routeID) {
+      const busObj = this.nearBusRoute.find((ele) => {
+        return ele.RouteUID === routeID
+      })
+
+      return busObj
+        ? direction === 0
+          ? busObj.DestinationStopNameZh
+          : busObj.DepartureStopNameZh
+        : ''
     }
   }
 }
